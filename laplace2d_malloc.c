@@ -13,6 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
+/*
+ * 
+ *  The original code has been modified to use CUDA Unified memory and dynamic arrays.
+ *
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
