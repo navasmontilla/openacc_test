@@ -19,9 +19,9 @@ Among the most useful compilation flags, we can find:
 
 We can also use  ```-Minfo=accel``` to see on the screen some information about the parts of the code that have been accelerated.
 
-## Using the unified (managed) memory
+## Using CUDA Unified (managed) memory
 
-When using CUDA unified memory, both GPU and CPU memories are combined into a single pool. To tell the compiler to use the unified memory, we must use the flag ```-ta=tesla:managed```. There are three important operations in the CPU/GPU memories to be considered:
+When using CUDA Unified memory, both GPU and CPU memories are combined into a single pool. To tell the compiler to use the unified memory, we must use the flag ```-ta=tesla:managed```. There are three important operations in the CPU/GPU memories to be considered:
 
 - *Array allocation*: we will use the ```enter data create()``` directive.
 ```c
