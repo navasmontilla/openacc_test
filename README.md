@@ -5,3 +5,5 @@ In this repository, different test codes for OpenACC using managed memory can be
 - [Quick guide](openaccbasics.md) 
 
 Note that the codes may be incomplete or not working as expected.
+
+(euler.c no funciona todavía)
