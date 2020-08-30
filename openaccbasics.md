@@ -24,7 +24,7 @@ We can also use  ```-Minfo=accel``` to see on the screen some information about 
 When using CUDA unified memory, both GPU and CPU memories are combined into a single pool. To tell the compiler to use the unified memory, we must use the flag ```-ta=tesla:managed```. There are three important operations in the CPU/GPU memories to be considered:
 
 - *Array allocation*: we will use the ```enter data create()``` drective.
-```
+```c
 int* A=(int*)malloc(N*sizeof(int));
 #pragma acc enter data create(A[0:N])
 ```
