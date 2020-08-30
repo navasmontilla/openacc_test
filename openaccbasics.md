@@ -46,9 +46,9 @@ free(A);
 #pragma acc update self(A[0:N])
 ```
 
-When accelerating a loop, if the shared variables in the loop have already been allocated and initialized/copied in the unified memory, they will be defined inside the ```present``` clause. For example, in this loop we use two matrices that already arre in the managed memory:
+When accelerating a loop, if the shared variables in the loop have already been allocated and initialized/copied in the unified memory, they will be defined inside the ```present``` clause. For example, in this loop we use matrix A that already is in the managed memory:
 ```c
-#pragma acc parallel loop present(A[0:n][0:m],Anew[0:n][0:m])  
+#pragma acc parallel loop present(A[0:n])  
         for( int j = 1; j < n; j++)
         { 
           ...
@@ -56,8 +56,57 @@ When accelerating a loop, if the shared variables in the loop have already been 
 ```
 ## Loop optimization
 
-When accelerating a loop, we can use *gangs* (coarse grain), *workers* and *vectors* (fine grain). Each gang may include several workers and each worker may include several vectors. Therefore, outer loops will be accelerated as *gangs* and inner loops as *vectors*:
+When accelerating a loop, we can use *gangs* (coarse grain), *workers* and *vectors* (fine grain). Each gang may include several workers and each worker may include several vectors. Therefore, ehen having nested loops, outer loops will be accelerated as *gangs* and inner loops as *vectors*:
 ```c
 #pragma acc parallel loop gang
+        for( int i = 1; i < n; i++)
+        { 
+           #pragma acc loop worker
+           for( int j = 1; j < m; j++)
+           {
+                #pragma acc loop vector
+                for( int k = 1; k < c; k++)
+                 {
+                        ...
+                 }
+           }
+        }
+```
+Generally, when having two nested loops we can just write:
+```c
+#pragma acc parallel loop
+        for( int i = 1; i < n; i++)
+        { 
+           #pragma acc loop
+           for( int j = 1; j < m; j++)
+           {
+                ...
+           }
+        }
+```
+
+- *Collapse*: when having nested loops, they can be converted into a single one using:
+```c
+#pragma acc parallel collapse(2)
+        for( int i = 1; i < n; i++)
+        { 
+           for( int j = 1; j < m; j++)
+           {
+                ...
+           }
+        }
+```
+where 2 is the number of loops.
+
+- *Tile*: when having nested loops, they can be redefined into n x m loops to explot data locality:
+```c
+#pragma acc parallel tile(32,32)
+        for( int i = 1; i < n; i++)
+        { 
+           for( int j = 1; j < m; j++)
+           {
+                ...
+           }
+        }
 ```
 
