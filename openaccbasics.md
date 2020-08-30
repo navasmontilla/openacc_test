@@ -30,23 +30,23 @@ int* A=(int*)malloc(N*sizeof(int));
 ```
 where N is the expected size of A. Note that ```A[0:N]``` can be replaced by ```A[:N]```.
 
-- *Array deallocation*: we will use the ```exit data delete()``` directive.
+- *Array deallocation*: we will use the ```exit data delete()``` clause.
 ```c
 #pragma acc exit data delete(A)
 free(A);
 ```
 
-- *Copy from host to device (CPU -> GPU)*: we will use the ```update device()``` directive.
+- *Copy from host to device (CPU -> GPU)*: we will use the ```update device()``` clause.
 ```c
 #pragma acc update device(A[0:N])
 ```
 
-- *Copy from device to host (GPU -> CPU)*: we will use the ```update self()``` directive.
+- *Copy from device to host (GPU -> CPU)*: we will use the ```update self()``` clause.
 ```c
 #pragma acc update self(A[0:N])
 ```
 
-When accelerating a loop, if the shared variables in the loop have already been allocated and initialized/copied in the unified memory, they will be refferred to as ```present```. For example, in this loop we use two matrices that already arre in the managed memory:
+When accelerating a loop, if the shared variables in the loop have already been allocated and initialized/copied in the unified memory, they will be defined inside the ```present``` clause. For example, in this loop we use two matrices that already arre in the managed memory:
 ```c
 #pragma acc parallel loop present(A[0:n][0:m],Anew[0:n][0:m])  
         for( int j = 1; j < n; j++)
