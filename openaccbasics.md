@@ -109,4 +109,6 @@ where 2 is the number of loops.
            }
         }
 ```
+## Example
 
+See [laplace2d_malloc.c](laplace2d_malloc.c)
