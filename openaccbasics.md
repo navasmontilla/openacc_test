@@ -23,9 +23,25 @@ We can also use  ```-Minfo=accel``` to see on the screen some information about 
 
 When using CUDA unified memory, both GPU and CPU memories are combined into a single pool. To tell the compiler to use the unified memory, we must use the flag ```-ta=tesla:managed```. There are three important operations in the CPU/GPU memories to be considered:
 
-- *Array allocation*: we will use the ```enter data create()``` drective.
+- *Array allocation*: we will use the ```enter data create()``` directive.
 ```c
 int* A=(int*)malloc(N*sizeof(int));
 #pragma acc enter data create(A[0:N])
 ```
-where N is the expected size of A.
+where N is the expected size of A. Note that ```A[0:N]``` can be replaced by ```A[:N]```.
+
+- *Array deallocation*: we will use the ```exit data delete()``` directive.
+```c
+#pragma acc exit data delete(A)
+free(A);
+```
+
+- *Copy from host to device (CPU -> GPU)*: we will use the ```update device()``` directive.
+```c
+#pragma acc update device(A[0:N])
+```
+
+- *Copy from device to host (GPU -> CPU)*: we will use the ```update self()``` directive.
+```c
+#pragma acc update self(A[0:N])
+```
