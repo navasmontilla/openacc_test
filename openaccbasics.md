@@ -109,6 +109,11 @@ where 2 is the number of loops.
            }
         }
 ```
-## Example
+## Example:
 
-See [laplace2d_malloc.c](laplace2d_malloc.c)
+See [laplace2d_malloc.c](laplace2d_malloc.c), which can be compiled as:
+
+```
+$ pgcc -acc -ta=tesla:managed -Minfo=accel laplace2d_malloc.c -o laplace2d_malloc
+```
+
