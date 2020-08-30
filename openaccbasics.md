@@ -7,7 +7,7 @@ We will use the NVIDIA HPC SDK (PGI compiler) that can be downloaded from: [http
 This compiler allows to compile both C and Fortran codes using ```pgcc``` and ```pgfortran```, respectively. For instance, to compile a serial C program we type in the console:
 
 ```
->> pgcc myprogram.c -o myprogram
+$ pgcc myprogram.c -o myprogram
 ```
 
 Among the most useful compilation flags, we can find:
