@@ -45,3 +45,19 @@ free(A);
 ```c
 #pragma acc update self(A[0:N])
 ```
+
+When accelerating a loop, if the shared variables in the loop have already been allocated and initialized/copied in the unified memory, they will be refferred to as ```present```. For example, in this loop we use two matrices that already arre in the managed memory:
+```c
+#pragma acc parallel loop present(A[0:n][0:m],Anew[0:n][0:m])  
+        for( int j = 1; j < n; j++)
+        { 
+          ...
+        }
+```
+## Loop optimization
+
+When accelerating a loop, we can use *gangs* (coarse grain), *workers* and *vectors* (fine grain). Each gang may include several workers and each worker may include several vectors. Therefore, outer loops will be accelerated as *gangs* and inner loops as *vectors*:
+```c
+#pragma acc parallel loop gang
+```
+
