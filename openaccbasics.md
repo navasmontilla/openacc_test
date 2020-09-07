@@ -19,6 +19,18 @@ Among the most useful compilation flags, we can find:
 
 We can also use  ```-Minfo=accel``` to see on the screen some information about the parts of the code that have been accelerated.
 
+### Using nvprof 
+
+The profiler nvprof can be used to examine the performance of the accelerated code. It can be run as:
+```
+$ nvprof ./myprogram
+```
+
+Among the most useful flags, we can find:
+
+- ```--print-gpu-trace```: to see the timeline in detail.
+- ```--log-file profile.txt```: to print the output in a text file.
+
 ## Using CUDA Unified (managed) memory
 
 When using CUDA Unified memory, both GPU and CPU memories are combined into a single pool. To tell the compiler to use the unified memory, we must use the flag ```-ta=tesla:managed```. There are three important operations in the CPU/GPU memories to be considered:
